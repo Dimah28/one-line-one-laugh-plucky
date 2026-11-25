@@ -29,6 +29,7 @@ def validate_entry(text: str) -> str:
         "line is %d chars, gate is 1-%d" % (len(text), MAX_CHARS)
     )
     assert text.splitlines() == [text], "entry must be exactly one line"
+    assert text == text.strip(), "entry must not start or end with whitespace"
     text.encode("utf-8")  # gate: must be valid UTF-8
     return text
 
