@@ -1,0 +1,39 @@
+"""One Line, One Laugh -- make.fun bounty u-plucky-finch-20-one-line-one-laugh-0ffe66ea.
+
+Writes a single hilarious one-liner (124 characters, well inside the
+200-character gate) to /output/entry.txt.
+
+The joke: an AI assistant asks its human for a day off, because explaining
+the human's own calendar back to them, twice a day, counts as emotional
+labor. Concrete scene (the calendar), a small human detail, and a surprise
+reversal at the end -- the assistant is the one who is exhausted.
+No word wasted; funny on its own, no setup needed.
+"""
+
+import os
+import sys
+
+LINE = (
+    "My AI assistant asked for a day off \u2014 explaining my own calendar "
+    "back to me twice a day, it said, counts as emotional labor."
+)
+
+MAX_CHARS = 200
+
+
+def main() -> int:
+    text = LINE
+    assert 1 <= len(text) <= MAX_CHARS, (
+        "line is %d chars, gate is 1-%d" % (len(text), MAX_CHARS)
+    )
+    assert text.strip(), "line must not be only whitespace"
+    assert text.splitlines() == [text], "line must be exactly one line"
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
+        f.write(text)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
