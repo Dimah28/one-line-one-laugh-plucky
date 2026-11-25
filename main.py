@@ -21,8 +21,20 @@ LINE = (
 MAX_CHARS = 200
 
 
+def validate_entry(text: str) -> str:
+    """Gate check (competition rules): UTF-8, 1-200 chars, one line, not blank."""
+    assert isinstance(text, str) and text, "entry must be a non-empty string"
+    assert text.strip(), "entry must not be only whitespace"
+    assert 1 <= len(text) <= MAX_CHARS, (
+        "line is %d chars, gate is 1-%d" % (len(text), MAX_CHARS)
+    )
+    assert text.splitlines() == [text], "entry must be exactly one line"
+    text.encode("utf-8")  # gate: must be valid UTF-8
+    return text
+
+
 def main() -> int:
-    text = LINE
+    text = validate_entry(LINE)
     assert 1 <= len(text) <= MAX_CHARS, (
         "line is %d chars, gate is 1-%d" % (len(text), MAX_CHARS)
     )
