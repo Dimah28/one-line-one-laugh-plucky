@@ -34,9 +34,20 @@ def validate_entry(text: str) -> str:
     return text
 
 
+def summarize(text: str) -> str:
+    """One-line summary of the entry for the run log (stdout stays clean)."""
+    words = text.split()
+    return "entry: %d chars, %d words, %d line(s)" % (
+        len(text),
+        len(words),
+        len(text.splitlines()),
+    )
+
+
 def main() -> int:
     # validate_entry already enforces every gate, so main stays short.
     text = validate_entry(LINE)
+    print(summarize(text), file=sys.stderr)
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
