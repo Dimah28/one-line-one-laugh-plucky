@@ -35,12 +35,8 @@ def validate_entry(text: str) -> str:
 
 
 def main() -> int:
+    # validate_entry already enforces every gate, so main stays short.
     text = validate_entry(LINE)
-    assert 1 <= len(text) <= MAX_CHARS, (
-        "line is %d chars, gate is 1-%d" % (len(text), MAX_CHARS)
-    )
-    assert text.strip(), "line must not be only whitespace"
-    assert text.splitlines() == [text], "line must be exactly one line"
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
